@@ -11,10 +11,10 @@
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_towatch" />
     <fragment
-        android:id="@+id/latestFragment"
-        android:name="com.example.todomovies.LatestFragment"
-        android:label="fragment_latest"
-        tools:layout="@layout/fragment_latest" />
+        android:id="@+id/topRatedFragment"
+        android:name="com.example.todomovies.TopRatedFragment"
+        android:label="fragment_top_rated"
+        tools:layout="@layout/fragment_top_rated" />
     <fragment
         android:id="@+id/popularFragment"
         android:name="com.example.todomovies.PopularFragment"
