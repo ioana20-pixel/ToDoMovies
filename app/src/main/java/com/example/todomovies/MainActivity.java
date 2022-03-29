@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
     }
+
+    // !!!! This is just a test menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.test_menu, menu);
@@ -42,9 +44,13 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.test) {
             Intent intent = new Intent(this, DetailsActivity.class);
             intent.putExtra("id", 84958);
+            // 60625 - Rick and Morty
+            // 84958 - Loki
+            intent.putExtra("id", 60625);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    ////!!!!
 }

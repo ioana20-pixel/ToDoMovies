@@ -14,7 +14,10 @@ import com.example.todomovies.R;
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.model.TvDetailsResponse;
 import com.example.todomovies.data.api.TvDetailsApi;
+import com.example.todomovies.databinding.ActivityDetailsBinding;
 import com.example.todomovies.utils.Constants;
+
+import org.jetbrains.annotations.NotNull;
 
 //import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,61 +31,32 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
 
-        /*
-        Button testButton = findViewById(R.id.testButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TvDetailsApi tvApi = ApiClient.getTvDetailsApi();
-                Call<TvDetailsResponse> responseCall = tvApi.getMovieDetails(84958);
-                responseCall.enqueue(new Callback<TvDetailsResponse>() {
-                    @Override
-                    public void onResponse(Call<TvDetailsResponse> call, Response<TvDetailsResponse> response) {
-                        if (response.code() == 200) {
-                            TvDetailsResponse tv = response.body();
-                            Log.v("ioana", tv.toString());
-                        } else {
-                            Log.v("ioana", response.message());
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<TvDetailsResponse> call, Throwable t) {
-                        Log.v("ioana", t.getMessage());
-                    }
-                });
-            }
-        });*/
 
-        initUi();
+        initUiTest();
     }
 
-    private void initUi() {
-        ImageView backdrop = findViewById(R.id.ivBackdrop);
-        ImageView poster = findViewById(R.id.ivPoster);
-        TextView title = findViewById(R.id.tvTitle);
-        TextView rating = findViewById(R.id.tvRating);
-        TextView overview = findViewById(R.id.tvOverview);
+    private void initUiTest() {
 
         TvDetailsApi tvApi = ApiClient.getTvDetailsApi();
         int id = getIntent().getExtras().getInt("id");
 
-        Call<TvDetailsResponse> responseCall = tvApi.getMovieDetails(84958);
+        Call<TvDetailsResponse> responseCall = tvApi.getMovieDetails(id);
         responseCall.enqueue(new Callback<TvDetailsResponse>() {
             @Override
-            public void onResponse(Call<TvDetailsResponse> call, Response<TvDetailsResponse> response) {
+            public void onResponse(@NotNull Call<TvDetailsResponse> call, @NotNull Response<TvDetailsResponse> response) {
                 if (response.code() == 200) {
                     TvDetailsResponse tv = response.body();
 //                    Log.v("ioana", tv.toString());
                     if (tv != null) {
-                        Glide.with(backdrop.getContext())
+                        Glide.with(getApplicationContext())
                                 .load(Constants.IMAGE_BASE_URL + tv.getBackdropPath())
-                                .into(backdrop);
-                        Glide.with(backdrop.getContext())
+                                .into(binding.ivBackdrop);
+                        Glide.with(getApplicationContext())
                                 .load(Constants.IMAGE_BASE_URL + tv.getPosterPath())
-                                .into(poster);
-                        title.setText(tv.getName());
+                                .into(binding.ivPoster);
+                        binding.tvTitle.setText(tv.getName());
                         binding.tvRating.setText("Rating: " + tv.getVoteAverage());
-                        overview.setText(tv.getOverview());
+                        binding.tvOverview.setText(tv.getOverview());
                         binding.tvSeasons.setText(String.valueOf(tv.getNumberOfSeasons()));
                         binding.tvEpisodes.setText(String.valueOf(tv.getNumberOfEpisodes()));
                         binding.tvStatus.setText(tv.getStatus());
@@ -92,12 +66,11 @@ public class DetailsActivity extends AppCompatActivity {
 
                 } else {
                     Log.v("ioana", response.message());
-
                 }
             }
 
             @Override
-            public void onFailure(Call<TvDetailsResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<TvDetailsResponse> call, @NotNull Throwable t) {
                 Log.v("ioana", t.getMessage());
             }
         });
