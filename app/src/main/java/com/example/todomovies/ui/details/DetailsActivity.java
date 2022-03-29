@@ -24,6 +24,7 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityDetailsBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_details);
 
 
@@ -63,6 +64,8 @@ public class DetailsActivity extends AppCompatActivity {
         TextView overview = findViewById(R.id.tvOverview);
 
         TvDetailsApi tvApi = ApiClient.getTvDetailsApi();
+        int id = getIntent().getExtras().getInt("id");
+
         Call<TvDetailsResponse> responseCall = tvApi.getMovieDetails(84958);
         responseCall.enqueue(new Callback<TvDetailsResponse>() {
             @Override
@@ -78,8 +81,12 @@ public class DetailsActivity extends AppCompatActivity {
                                 .load(Constants.IMAGE_BASE_URL + tv.getPosterPath())
                                 .into(poster);
                         title.setText(tv.getName());
-                        rating.setText(String.valueOf(tv.getVoteAverage()));
+                        binding.tvRating.setText("Rating: " + tv.getVoteAverage());
                         overview.setText(tv.getOverview());
+                        binding.tvSeasons.setText(String.valueOf(tv.getNumberOfSeasons()));
+                        binding.tvEpisodes.setText(String.valueOf(tv.getNumberOfEpisodes()));
+                        binding.tvStatus.setText(tv.getStatus());
+                        binding.tvTagline.setText(tv.getTagline());
 
                     }
 

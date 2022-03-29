@@ -36,8 +36,8 @@ public class TvDetailsResponse {
     @SerializedName("number_of_seasons")
     private int numberOfSeasons;
 
-//	@SerializedName("status")
-//	private String status;
+    @SerializedName("status")
+    private String status;
 
 
     public TvDetailsResponse() {
@@ -82,5 +82,9 @@ public class TvDetailsResponse {
 
     public int getNumberOfSeasons(){
         return numberOfSeasons;
+    }
+
+    public String getStatus(){
+        return status;
     }
 }
