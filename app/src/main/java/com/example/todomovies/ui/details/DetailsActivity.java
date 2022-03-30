@@ -30,9 +30,22 @@ public class DetailsActivity extends AppCompatActivity {
         binding = ActivityDetailsBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_details);
 
-
-
         initUiTest();
+    }
+    private void bindUI(TvDetailsResponse tv) {
+        Glide.with(getApplicationContext())
+                .load(Constants.IMAGE_BASE_URL + tv.getBackdropPath())
+                .into(binding.ivBackdrop);
+        Glide.with(getApplicationContext())
+                .load(Constants.IMAGE_BASE_URL + tv.getPosterPath())
+                .into(binding.ivPoster);
+        binding.tvTitle.setText(tv.getName());
+        binding.tvRating.setText("Rating: " + tv.getVoteAverage());
+        binding.tvOverview.setText(tv.getOverview());
+        binding.tvSeasons.setText(String.valueOf(tv.getNumberOfSeasons()));
+        binding.tvEpisodes.setText(String.valueOf(tv.getNumberOfEpisodes()));
+        binding.tvStatus.setText(tv.getStatus());
+        binding.tvTagline.setText(tv.getTagline());
     }
 
     private void initUiTest() {
