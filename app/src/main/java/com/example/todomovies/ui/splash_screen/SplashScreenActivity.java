@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.todomovies.MainActivity;
 import com.example.todomovies.R;
+import com.example.todomovies.login_screen.Login;
 
 public class SplashScreenActivity extends AppCompatActivity {
     @Override
@@ -14,11 +15,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+        boolean h = new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
+            }
         }, 2000);
+
     }
 }

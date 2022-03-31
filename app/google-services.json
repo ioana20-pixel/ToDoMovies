@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "250542847651",
+    "project_id": "todomovies-project",
+    "storage_bucket": "todomovies-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250542847651:android:cc6cb743dd5f66b2143116",
+        "android_client_info": {
+          "package_name": "com.example.todomovies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250542847651-b5c2vk2h5anrucg9mdmqsn6ofdv1fi8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBDH8wm5i-oSCQ0cu_418EqDn7LhmBI94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250542847651-b5c2vk2h5anrucg9mdmqsn6ofdv1fi8m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
