@@ -1,5 +1,6 @@
 package com.example.todomovies.ui.Popular;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.todomovies.R;
 import com.example.todomovies.data.api.MovieApi;
 import com.example.todomovies.data.model.MoviesList;
 import com.example.todomovies.data.model.Result;
+import com.example.todomovies.ui.details.DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +84,14 @@ public class PopularFragment extends Fragment {
         list.observe(getViewLifecycleOwner(), movieResult -> {
             recyclerView = view.findViewById(R.id.recycler_vpopular);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            GenAdapter adapter = new GenAdapter(getContext(),movieResult);
-            recyclerView.setAdapter(adapter);
+            GenAdapter adapter = new GenAdapter(getContext(), movieResult, new GenAdapter.ItemClickListener() {
+                @Override
+                public void onItemClicked(int id) {
+                    Intent intent = new Intent(getContext(), DetailsActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            });            recyclerView.setAdapter(adapter);
             recyclerView.setHasFixedSize(true);
 
 
@@ -94,10 +102,6 @@ public class PopularFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
         super.onViewCreated(view, savedInstance);
-
-
-
-
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.todomovies.ui.TopRated;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import com.example.todomovies.R;
 import com.example.todomovies.data.api.MovieApi;
 import com.example.todomovies.data.model.MoviesList;
 import com.example.todomovies.data.model.Result;
+import com.example.todomovies.ui.details.DetailsActivity;
 
 public class TopRatedFragment extends Fragment {
 
@@ -76,7 +78,6 @@ public class TopRatedFragment extends Fragment {
                 List<Result> movieList = new ArrayList<>();
                 MoviesList movies = response.body();
                 for (Result movie : movies.getResults()) {
-                    Log.v("abc", movie.toString());
                     movieList.add(movie);
                 }
 
@@ -86,16 +87,20 @@ public class TopRatedFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MoviesList> call, Throwable t) {
-                Log.v("ABC", t.getMessage());
             }
         });
 
         list.observe(getViewLifecycleOwner(), movieResult -> {
-            Log.v("topRateOvi", "" + movieList.size());
             recyclerView = view.findViewById(R.id.recycler_vtoprated);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            GenAdapter adapter = new GenAdapter(getContext(), movieResult);
-            recyclerView.setAdapter(adapter);
+            GenAdapter adapter = new GenAdapter(getContext(), movieResult, new GenAdapter.ItemClickListener() {
+                @Override
+                public void onItemClicked(int id) {
+                    Intent intent = new Intent(getContext(), DetailsActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            });            recyclerView.setAdapter(adapter);
             recyclerView.setHasFixedSize(true);
 
 
