@@ -12,12 +12,12 @@
         tools:layout="@layout/fragment_towatch" />
     <fragment
         android:id="@+id/topRatedFragment"
-        android:name="com.example.todomovies.TopRatedFragment"
+        android:name="com.example.todomovies.ui.TopRated.TopRatedFragment"
         android:label="fragment_top_rated"
         tools:layout="@layout/fragment_top_rated" />
     <fragment
         android:id="@+id/popularFragment"
-        android:name="com.example.todomovies.PopularFragment"
+        android:name="com.example.todomovies.ui.Popular.PopularFragment"
         android:label="fragment_popular"
         tools:layout="@layout/fragment_popular" />
 </navigation>

@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ToWatchFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_vtowatch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="To Watch"
-        android:textSize="30sp"/>
+        android:layout_height="700dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/cardview_light_background"
+
+        ></androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
