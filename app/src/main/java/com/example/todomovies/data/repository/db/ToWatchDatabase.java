@@ -18,7 +18,7 @@ public abstract class ToWatchDatabase extends RoomDatabase {
 
     public static ToWatchDatabase getInstance(Context context){
         if (instance == null)
-            instance = Room.databaseBuilder(context, ToWatchDatabase.class, "towatch_database").build();
+            instance = Room.databaseBuilder(context, ToWatchDatabase.class, "towatch_database").allowMainThreadQueries().build();
 
         return instance;
     }
