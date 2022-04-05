@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.todomovies.R;
 import com.example.todomovies.data.model.TvDetailsResponse;
+import com.example.todomovies.data.repository.ToWatchRepository;
+import com.example.todomovies.data.repository.db.ToWatchDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +62,7 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //db delete item
+                ToWatchRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao()).delete(item);
             }
         });
     }

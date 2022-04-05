@@ -19,5 +19,8 @@ public interface ToWatchDao {
     int deleteToWatch(TvDetailsResponse result);
 
     @Query("SELECT * FROM towatch")
-    List<TvDetailsResponse> getAllFavorites();
+    List<TvDetailsResponse> getAllToWatch();
+
+    @Query("SELECT * FROM towatch where id = :id")
+    TvDetailsResponse findById(int id);
 }

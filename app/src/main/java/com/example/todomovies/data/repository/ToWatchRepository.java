@@ -3,6 +3,8 @@ package com.example.todomovies.data.repository;
 import com.example.todomovies.data.model.Result;
 import com.example.todomovies.data.model.TvDetailsResponse;
 
+import java.util.List;
+
 public class ToWatchRepository {
     private final ToWatchDao toWatchDao;
 
@@ -25,5 +27,13 @@ public class ToWatchRepository {
 
     public int delete(TvDetailsResponse result){
         return toWatchDao.deleteToWatch(result);
+    }
+
+    public List<TvDetailsResponse> getAll() {
+        return ToWatchDao.getAllToWatch();
+    }
+
+    public TvDetailsResponse findById(int id) {
+        return ToWatchDao.findById(id);
     }
 }
