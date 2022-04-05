@@ -1,5 +1,6 @@
 package com.example.todomovies.data.repository;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -9,6 +10,7 @@ import com.example.todomovies.data.model.TvDetailsResponse;
 
 import java.util.List;
 
+@Dao
 public interface ToWatchDao {
     @Insert
     long insertToWatch(TvDetailsResponse result);
