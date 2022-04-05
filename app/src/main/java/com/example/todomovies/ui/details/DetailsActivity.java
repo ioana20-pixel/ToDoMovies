@@ -16,6 +16,8 @@ import com.example.todomovies.R;
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.model.TvDetailsResponse;
 import com.example.todomovies.data.api.TvDetailsApi;
+import com.example.todomovies.data.repository.ToWatchRepository;
+import com.example.todomovies.data.repository.db.ToWatchDatabase;
 import com.example.todomovies.databinding.ActivityDetailsBinding;
 import com.example.todomovies.utils.Constants;
 import com.example.todomovies.utils.InjectorUtils;
@@ -64,6 +66,14 @@ public class DetailsActivity extends AppCompatActivity {
         binding.tvEpisodes.setText(String.valueOf(tv.getNumberOfEpisodes()));
         binding.tvStatus.setText(tv.getStatus());
         binding.tvTagline.setText(tv.getTagline());
+
+        binding.btnAddFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToWatchRepository.getInstance(ToWatchDatabase.getInstance(getApplicationContext()).toWatchDao()).insert(tv);
+            }
+        });
+
     }
 
     }

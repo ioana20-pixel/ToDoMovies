@@ -1,5 +1,9 @@
 package com.example.todomovies.data.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +11,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Result implements Serializable{
+
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
