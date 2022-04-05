@@ -69,10 +69,11 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
 
     private void deleteItem(TvDetailsResponse item) {
         ToWatchRepository repo = ToWatchRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
-        repo.delete(item);
+
+        new Thread(() -> repo.delete(item)).start();
+
         movieResult.remove(item);
         notifyDataSetChanged();
-
     }
 
 

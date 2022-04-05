@@ -37,6 +37,7 @@ startActivity(intent);
 
 public class DetailsActivity extends AppCompatActivity {
     private ActivityDetailsBinding binding;
+    private FindTvListener listener;
 
 
     @Override
@@ -68,17 +69,44 @@ public class DetailsActivity extends AppCompatActivity {
         binding.tvStatus.setText(tv.getStatus());
         binding.tvTagline.setText(tv.getTagline());
 
-        if (repo.findById(tv.getId()) != null)
-            binding.btnAddFavorite.setEnabled(false);
+
+        listener = new FindTvListener() {
+            @Override
+            public void onReceived(boolean found) {
+                DetailsActivity.this.runOnUiThread(() -> {
+                    if (found) binding.btnAddFavorite.setEnabled(false);
+                });
+            }
+        };
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (repo.findById(tv.getId()) != null)
+                    listener.onReceived(true);
+            }
+        }).start();
+
 
         binding.btnAddFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                repo.insert(tv);
-                binding.btnAddFavorite.setEnabled(false);            }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        repo.insert(tv);
+                    }
+                }).start();
+
+                binding.btnAddFavorite.setEnabled(false);
+            }
         });
 
     }
 
+    public interface FindTvListener {
+        void onReceived(boolean found);
     }
+
+}
 

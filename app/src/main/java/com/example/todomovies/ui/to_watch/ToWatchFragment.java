@@ -26,6 +26,8 @@ import java.util.List;
 public class ToWatchFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<TvDetailsResponse> movieList = new ArrayList<>();
+    private MoviesListener listener;
+
 
 
     @Override
@@ -33,22 +35,38 @@ public class ToWatchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_towatch, container, false);
-        movieList = ToWatchRepository.getInstance(ToWatchDatabase.getInstance(getContext()).toWatchDao()).getAll();
+
+        listener = movies -> {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView = view.findViewById(R.id.recycler_vtowatch);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    ToWatchAdapter adapter = new ToWatchAdapter(getContext(), movies, new ToWatchAdapter.ItemClickListener() {
+                        @Override
+                        public void onItemClicked(int id) {
+                            Intent intent = new Intent(getContext(), DetailsActivity.class);
+                            intent.putExtra("id", id);
+                            startActivity(intent);
+                        }
+                    });
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setHasFixedSize(true);
+                }
+            });
+        };
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                movieList = ToWatchRepository.getInstance(ToWatchDatabase.getInstance(getContext()).toWatchDao()).getAll();
+                listener.onReceived(movieList);
+            }
+        }).start();
+
 
         // retrofit
-
-        recyclerView = view.findViewById(R.id.recycler_vtowatch);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ToWatchAdapter adapter = new ToWatchAdapter(getContext(), movieList, new ToWatchAdapter.ItemClickListener() {
-            @Override
-            public void onItemClicked(int id) {
-                Intent intent = new Intent(getContext(), DetailsActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
 
 
         return view;
@@ -58,6 +76,10 @@ public class ToWatchFragment extends Fragment {
         super.onViewCreated(view, savedInstance);
 
 
+    }
+
+    public interface MoviesListener {
+        void onReceived(List<TvDetailsResponse> movies);
     }
 
 }
