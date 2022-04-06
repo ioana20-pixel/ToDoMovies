@@ -46,4 +46,7 @@ public class ApiClient {
         return tvDetailsApi;
     }
 
+    private static final MovieApi movieApi=retrofit.create(MovieApi.class);
+    public static MovieApi getMovieApi(){return movieApi;}
+
 }

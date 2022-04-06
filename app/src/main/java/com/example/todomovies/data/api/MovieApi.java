@@ -10,9 +10,6 @@ public interface MovieApi {
 
     @GET("tv/{category}")
     Call<MoviesList> listOfMovies(
-            @Path("category") String category,
-            @Query("api_key") String apiKey,
-            @Query("language") String language,
-            @Query("page")int page
+            @Path("category") String category
     );
 }
