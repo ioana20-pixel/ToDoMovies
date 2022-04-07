@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.todomovies.R;
+import com.example.todomovies.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +30,10 @@ public class GenAdapter extends RecyclerView.Adapter<GenAdapter.ViewHolder> {
     private final List<Result> movieResult;
     private final ItemClickListener listener;
     private Context context;
-    public ImageURLListener URL;
 
     public interface ItemClickListener {
         void onItemClicked(int id);
     }
-
-    String IMAGE_BASE_URL;
-
-    private MutableLiveData<String> image_url = new MutableLiveData<>();
 
     public GenAdapter(Context context, List<Result> movieResult, ItemClickListener listener) {
         this.context = context;
@@ -54,25 +50,7 @@ public class GenAdapter extends RecyclerView.Adapter<GenAdapter.ViewHolder> {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         view = layoutInflater.inflate(R.layout.card_view, parent, false);
 
-        Call<Configuration> config = ApiClient.getConfigApi().getConfiguration();
-        config.enqueue(new Callback<Configuration>() {
-
-            @Override
-            public void onResponse(Call<Configuration> call, Response<Configuration> response) {
-                Configuration configuration = response.body();
-//                IMAGE_BASE_URL = configuration.getImages().getSecureBaseUrl()+configuration.getImages().getPosterSizes().get(5);
-//                    URL.onReceived(configuration.getImages().getSecureBaseUrl()+configuration.getImages().getPosterSizes().get(5));
-                image_url.postValue(configuration.getImages().getSecureBaseUrl() + configuration.getImages().getPosterSizes().get(5));
-            }
-
-            @Override
-            public void onFailure(Call<Configuration> call, Throwable t) {
-
-            }
-        });
-
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -90,12 +68,10 @@ public class GenAdapter extends RecyclerView.Adapter<GenAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-//        Log.v("CNT", "hellooo" + movieResult.size());
         return movieResult.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         final View view;
         TextView movieTitle, movieRate, releaseDate;
         ImageView movieImg;
@@ -114,43 +90,13 @@ public class GenAdapter extends RecyclerView.Adapter<GenAdapter.ViewHolder> {
 
         public void Bind(Result movie) {
             movieTitle.setText(movie.getName());
-            movieRate.setText(String.valueOf(movie.getPopularity()));
+            movieRate.setText(String.valueOf(movie.getVoteAverage()));
             releaseDate.setText(movie.getFirstAirDate());
-//            final String[] imageURL = new String[1];
-//            URL = new ImageURLListener() {
-//                @Override
-//                public void onReceived(String URL) {
-//                    ((MainActivity)context).getSupportFragmentManager().findFragmentById(R.id.nav_fragment).getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Log.v("test",URL);
-////                            imageURL[0] =URL;
-//                            Glide.with(context)
-//                                    .load(URL + movie.getPosterPath())
-//                                    .into(movieImg);
-//                        }
-//                    });
-//
-//                }
-//            };
 
-
-            image_url.observe(((MainActivity) context).getSupportFragmentManager().findFragmentById(R.id.nav_fragment).getViewLifecycleOwner(), new Observer<String>() {
-                @Override
-
-                public void onChanged(String s) {
-                    Glide.with(context)
-                            .load(s + movie.getPosterPath())
-                            .into(movieImg);
-                }
-
-            });
-
+            Glide.with(context)
+                    .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
+                    .into(movieImg);
 
         }
-    }
-    interface ImageURLListener {
-        void onReceived(String URL);
-
     }
 }

@@ -18,6 +18,7 @@ import com.example.todomovies.R;
 import com.example.todomovies.data.model.TvDetailsResponse;
 import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
+import com.example.todomovies.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,6 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
     public interface ItemClickListener{
         void onItemClicked(int id);
     }
-    String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w780";
 
     public ToWatchAdapter(Context context, List<TvDetailsResponse> movieResult, ItemClickListener listener) {
         this.context = context;
@@ -79,7 +79,6 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-//        Log.v("CNT", "hellooo" + movieResult.size());
         return movieResult.size();
     }
 
@@ -109,9 +108,7 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
 
             //Adding glide to display image
             Glide.with(context)
-                    .load(IMAGE_BASE_URL + movie.getPosterPath())
-                    //.load("https://cdn.vox-cdn.com/thumbor/AahdPlzwvjRZGh1WjS1ND_Mkub0=/0x0:2040x1360/1200x800/filters:focal(857x517:1183x843)/cdn.vox-cdn.com/uploads/chorus_image/image/68820539/acastro_180427_1777_0001.0.jpg")
-
+                    .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
                     .into(movieImg);
         }
     }

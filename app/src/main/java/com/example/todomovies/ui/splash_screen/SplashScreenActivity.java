@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.todomovies.MainActivity;
 import com.example.todomovies.R;
 import com.example.todomovies.login_screen.Login;
+import com.example.todomovies.utils.Constants;
 
 public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        Constants.setImageBaseUrl();
 
         boolean h = new Handler().postDelayed(new Runnable() {
             @Override
