@@ -3,9 +3,11 @@ package com.example.todomovies.utils;
 import android.content.Context;
 
 import com.example.todomovies.data.api.ApiClient;
+import com.example.todomovies.data.repository.FirebaseAuthRepository;
 import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.TvDetailsRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
+import com.example.todomovies.login_screen.register.RegisterViewModelFactory;
 import com.example.todomovies.ui.details.DetailsViewModelFactory;
 
 public class InjectorUtils {
@@ -24,5 +26,9 @@ public class InjectorUtils {
         TvDetailsRepository tvDetailsRepository = TvDetailsRepository.getInstance(ApiClient.getTvDetailsApi());
         ToWatchRepository toWatchRepository= ToWatchRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
         return new DetailsViewModelFactory(tvDetailsRepository, toWatchRepository, id);
+    }
+
+    public RegisterViewModelFactory provideRegisterViewModelFactory() {
+        return new RegisterViewModelFactory(FirebaseAuthRepository.getInstance());
     }
 }

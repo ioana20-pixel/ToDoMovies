@@ -1,7 +1,6 @@
 package com.example.todomovies.login_screen;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -14,11 +13,11 @@ import android.widget.Toast;
 import com.example.todomovies.MainActivity;
 import com.example.todomovies.R;
 import com.example.todomovies.data.repository.LoginRepository;
+import com.example.todomovies.login_screen.register.Register;
 import com.example.todomovies.ui.base.BaseActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends BaseActivity<LoginViewModel> {
 
