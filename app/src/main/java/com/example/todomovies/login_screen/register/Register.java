@@ -2,6 +2,7 @@ package com.example.todomovies.login_screen.register;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,97 +13,80 @@ import android.widget.Toast;
 
 import com.example.todomovies.MainActivity;
 import com.example.todomovies.R;
+import com.example.todomovies.databinding.ActivityRegisterBinding;
 import com.example.todomovies.login_screen.Login;
+import com.example.todomovies.ui.base.BaseActivity;
+import com.example.todomovies.utils.InjectorUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Register extends AppCompatActivity{
-    EditText registerName, registerEmail, registerPassword, registerConfPassword;
-    Button registerBtn;
-    FirebaseAuth fAuth;
+import org.jetbrains.annotations.NotNull;
 
+public class Register extends BaseActivity<RegisterViewModel> {
+    private ActivityRegisterBinding binding;
 
-    Button ScndLoginBtn;
+    @NonNull
+    @NotNull
+    @Override
+    public RegisterViewModel createViewModel() {
+        RegisterViewModelFactory factory = InjectorUtils.getInstance().provideRegisterViewModelFactory();
+        return new ViewModelProvider(this, (ViewModelProvider.Factory) factory).get(RegisterViewModel.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        registerName = findViewById(R.id.RegisterName);
-        registerEmail = findViewById(R.id.RegisterEmail);
-        registerPassword = findViewById(R.id.RegisterPassword);
-        registerConfPassword = findViewById(R.id.ConfRegisterPassword);
-        registerBtn = findViewById(R.id.RegisterButton);
+        binding.RegisterButton.setOnClickListener(v -> {
+            String Name = binding.RegisterName.getText().toString();
+            String Email = binding.RegisterEmail.getText().toString();
+            String Password = binding.RegisterPassword.getText().toString();
+            String ConfPassword = binding.ConfRegisterPassword.getText().toString();
 
-        fAuth = FirebaseAuth.getInstance();
-
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String Name = registerName.getText().toString();
-                String Email = registerEmail.getText().toString();
-                String Password = registerPassword.getText().toString();
-                String ConfPassword = registerConfPassword.getText().toString();
-
-                if(Name.isEmpty()){
-                    registerName.setError("Name is required");
-                    return;
-                }
-
-                if(Email.isEmpty()){
-                    registerEmail.setError("Email address is required");
-                    return;
-                }
-
-                if(Password.isEmpty()){
-                    registerPassword.setError("Password is required");
-                    return;
-                }
-
-                if(ConfPassword.isEmpty()){
-                    registerConfPassword.setError("Please verify your password");
-                    return;
-                }
-
-                if(!Password.equals(ConfPassword)){
-                    registerConfPassword.setError("Passwords doesn't match");
-                    return;
-                }
-
-                //data is validated
-                //register the user with firebase
-
-                Toast.makeText(Register.this, "Data Validated", Toast.LENGTH_SHORT).show();
-
-                fAuth.createUserWithEmailAndPassword(Email, Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-
-                        //send user on next page
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            if (Name.isEmpty()) {
+                binding.RegisterName.setError("Name is required");
+                return;
             }
+            if (Email.isEmpty()) {
+                binding.RegisterEmail.setError("Email address is required");
+                return;
+            }
+            if (Password.isEmpty()) {
+                binding.RegisterPassword.setError("Password is required");
+                return;
+            }
+            if (ConfPassword.isEmpty()) {
+                binding.ConfRegisterPassword.setError("Please verify your password");
+                return;
+            }
+            if (!Password.equals(ConfPassword)) {
+                binding.ConfRegisterPassword.setError("Passwords doesn't match");
+                return;
+            }
+
+            //data is validated
+            Toast.makeText(Register.this, "Data Validated", Toast.LENGTH_SHORT).show();
+            //register the user
+            viewModel.register(Email, Password);
+            viewModel.registerSuccess.observe(this, authState -> {
+                if (authState.isSuccessful()) {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                } else
+                    Toast.makeText(Register.this, authState.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            });
         });
 
-        ScndLoginBtn = findViewById(R.id.ScndLoginBtn);
-        ScndLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
-            }
+        binding.ScndLoginBtn.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            finish();
         });
     }
 
+
 }
+
