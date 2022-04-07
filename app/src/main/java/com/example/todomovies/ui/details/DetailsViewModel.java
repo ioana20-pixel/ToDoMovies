@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.todomovies.data.model.TvDetailsResponse;
 import com.example.todomovies.data.repository.TvDetailsRepository;
+import com.example.todomovies.ui.base.BaseViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailsViewModel extends ViewModel {
+public class DetailsViewModel extends BaseViewModel {
     private final TvDetailsRepository detailsRepository;
 
     private final MutableLiveData<TvDetailsResponse> _tvDetails = new MutableLiveData<>();

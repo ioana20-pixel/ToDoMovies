@@ -19,14 +19,11 @@ import com.example.todomovies.data.api.TvDetailsApi;
 import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
 import com.example.todomovies.databinding.ActivityDetailsBinding;
+import com.example.todomovies.ui.base.BaseActivity;
 import com.example.todomovies.utils.Constants;
 import com.example.todomovies.utils.InjectorUtils;
 
 import org.jetbrains.annotations.NotNull;
-
-//import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /*
 How to start a Details activity:
@@ -35,20 +32,23 @@ intent.putExtra("id", tvId);
 startActivity(intent);
  */
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends BaseActivity<DetailsViewModel> {
     private ActivityDetailsBinding binding;
     private FindTvListener listener;
 
+    @NotNull
+    @Override
+    public DetailsViewModel createViewModel() {
+        int id = getIntent().getExtras().getInt("id");
+        DetailsViewModelFactory factory = InjectorUtils.getInstance().provideDetailsViewModelFactory(id);
+        return new ViewModelProvider(this, factory).get(DetailsViewModel.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        int id = getIntent().getExtras().getInt("id");
-        DetailsViewModelFactory factory = InjectorUtils.getInstance().provideDetailsViewModelFactory(id);
-        DetailsViewModel viewModel = new ViewModelProvider(this, factory).get(DetailsViewModel.class);
 
         viewModel.tvDetails.observe(this, this::bindUI);
     }
