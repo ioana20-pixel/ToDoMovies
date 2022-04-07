@@ -9,6 +9,14 @@ public class AuthState {
         errorMessage = "";
     }
 
+    public AuthState(boolean isSuccessful) {
+        this.isSuccessful = isSuccessful;
+    }
+
+    public AuthState(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
     public boolean isSuccessful() {
         return isSuccessful;
     }

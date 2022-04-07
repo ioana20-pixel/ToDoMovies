@@ -3,7 +3,7 @@ package com.example.todomovies.utils;
 import android.content.Context;
 
 import com.example.todomovies.data.api.ApiClient;
-import com.example.todomovies.data.repository.FirebaseAuthRepository;
+import com.example.todomovies.data.repository.auth.FirebaseAuthRepository;
 import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.TvDetailsRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;

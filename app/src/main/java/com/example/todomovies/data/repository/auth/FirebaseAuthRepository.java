@@ -1,17 +1,15 @@
-package com.example.todomovies.data.repository;
+package com.example.todomovies.data.repository.auth;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.todomovies.data.model.AuthState;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class FirebaseAuthRepository implements AuthRepository {
     private static FirebaseAuthRepository instance = null;
     private final FirebaseAuth firebaseAuth;
-    private final MutableLiveData<AuthState> registerIsSuccessful = new MutableLiveData<>();
+    private AuthenticationSuccessListener listener;
 
     private FirebaseAuthRepository() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -27,12 +25,12 @@ public class FirebaseAuthRepository implements AuthRepository {
     public void register(String email, String password) {
         AuthState authState = new AuthState();
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> authState.setSuccessful(true))
-                .addOnFailureListener(e -> authState.setErrorMessage(e.getMessage()));
+                .addOnSuccessListener(authResult -> listener.onReceived(new AuthState(true)))
+                .addOnFailureListener(e -> listener.onReceived(new AuthState(e.getMessage())));
     }
 
     @Override
-    public LiveData<AuthState> getRegisterIsSuccessful() {
-        return registerIsSuccessful;
+    public void addAuthenticationSuccessListener(AuthenticationSuccessListener listener) {
+        this.listener = listener;
     }
 }
