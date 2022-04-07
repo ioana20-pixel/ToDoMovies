@@ -1,7 +1,11 @@
 package com.example.todomovies.utils;
 
+import android.content.Context;
+
 import com.example.todomovies.data.api.ApiClient;
+import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.TvDetailsRepository;
+import com.example.todomovies.data.repository.db.ToWatchDatabase;
 import com.example.todomovies.ui.details.DetailsViewModelFactory;
 
 public class InjectorUtils {
@@ -16,8 +20,9 @@ public class InjectorUtils {
         return instance;
     }
 
-    public DetailsViewModelFactory provideDetailsViewModelFactory(int id) {
-        TvDetailsRepository repository = TvDetailsRepository.getInstance(ApiClient.getTvDetailsApi());
-        return new DetailsViewModelFactory(repository, id);
+    public DetailsViewModelFactory provideDetailsViewModelFactory(int id, Context context) {
+        TvDetailsRepository tvDetailsRepository = TvDetailsRepository.getInstance(ApiClient.getTvDetailsApi());
+        ToWatchRepository toWatchRepository= ToWatchRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
+        return new DetailsViewModelFactory(tvDetailsRepository, toWatchRepository, id);
     }
 }

@@ -1,11 +1,11 @@
-package com.example.todomovies.ui.splash_screen;
+package com.example.todomovies.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.todomovies.MainActivity;
+
 import com.example.todomovies.R;
 import com.example.todomovies.login_screen.Login;
 import com.example.todomovies.utils.Constants;

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todomovies.data.model.TvDetailsResponse;
+import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.TvDetailsRepository;
 import com.example.todomovies.ui.base.BaseViewModel;
 
@@ -24,25 +25,16 @@ import retrofit2.Response;
 
 public class DetailsViewModel extends BaseViewModel {
     private final TvDetailsRepository detailsRepository;
+    private final ToWatchRepository toWatchRepository;
 
     private final MutableLiveData<TvDetailsResponse> _tvDetails = new MutableLiveData<>();
 
-    public LiveData<TvDetailsResponse> tvDetails = new LiveData<TvDetailsResponse>() {
-        @Nullable
-        @org.jetbrains.annotations.Nullable
-        @Override
-        public TvDetailsResponse getValue() {
-            return _tvDetails.getValue();
-        }
+    public LiveData<TvDetailsResponse> tvDetails = _tvDetails;
 
-        @Override
-        public void observe(@NonNull @NotNull LifecycleOwner owner, @NonNull @NotNull Observer<? super TvDetailsResponse> observer) {
-            _tvDetails.observe(owner, observer);
-        }
-    };
+    public DetailsViewModel(TvDetailsRepository detailsRepository, ToWatchRepository toWatchRepository, int id) {
 
-    public DetailsViewModel(TvDetailsRepository detailsRepository, int id) {
         this.detailsRepository = detailsRepository;
+        this.toWatchRepository = toWatchRepository;
         setTv(id);
     }
 
@@ -64,5 +56,16 @@ public class DetailsViewModel extends BaseViewModel {
                 Log.e("DetailsViewModel", t.getMessage());
             }
         });
+    }
+
+    public void checkIfAlreadyAdded(int id, DetailsActivity.FindTvListener listener) {
+        new Thread(() -> {
+            if (toWatchRepository.findById(id) != null)
+                listener.onReceived(true);
+        }).start();
+    }
+
+    public void addToWatch(TvDetailsResponse tv) {
+        new Thread(() -> toWatchRepository.insert(tv)).start();
     }
 }

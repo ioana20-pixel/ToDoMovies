@@ -4,16 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.telecom.Call;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.todomovies.R;
-import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.model.TvDetailsResponse;
 import com.example.todomovies.data.api.TvDetailsApi;
 import com.example.todomovies.data.repository.ToWatchRepository;
@@ -40,7 +32,7 @@ public class DetailsActivity extends BaseActivity<DetailsViewModel> {
     @Override
     public DetailsViewModel createViewModel() {
         int id = getIntent().getExtras().getInt("id");
-        DetailsViewModelFactory factory = InjectorUtils.getInstance().provideDetailsViewModelFactory(id);
+        DetailsViewModelFactory factory = InjectorUtils.getInstance().provideDetailsViewModelFactory(id, getApplicationContext());
         return new ViewModelProvider(this, factory).get(DetailsViewModel.class);
     }
 
@@ -69,37 +61,15 @@ public class DetailsActivity extends BaseActivity<DetailsViewModel> {
         binding.tvStatus.setText(tv.getStatus());
         binding.tvTagline.setText(tv.getTagline());
 
+        listener = found -> DetailsActivity.this.runOnUiThread(() -> {
+            binding.btnAddFavorite.setEnabled(false);
+        });
+        viewModel.checkIfAlreadyAdded(tv.getId(), listener);
 
-        listener = new FindTvListener() {
-            @Override
-            public void onReceived(boolean found) {
-                DetailsActivity.this.runOnUiThread(() -> {
-                    if (found) binding.btnAddFavorite.setEnabled(false);
-                });
-            }
-        };
+        binding.btnAddFavorite.setOnClickListener(view -> {
+            viewModel.addToWatch(tv);
+            binding.btnAddFavorite.setEnabled(false);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (repo.findById(tv.getId()) != null)
-                    listener.onReceived(true);
-            }
-        }).start();
-
-
-        binding.btnAddFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        repo.insert(tv);
-                    }
-                }).start();
-
-                binding.btnAddFavorite.setEnabled(false);
-            }
         });
 
     }
