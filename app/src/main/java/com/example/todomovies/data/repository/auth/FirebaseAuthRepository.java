@@ -6,10 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.todomovies.data.model.AuthState;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.function.Consumer;
+
 public class FirebaseAuthRepository implements AuthRepository {
     private static FirebaseAuthRepository instance = null;
     private final FirebaseAuth firebaseAuth;
-    private AuthenticationSuccessListener listener;
 
     private FirebaseAuthRepository() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -22,15 +23,10 @@ public class FirebaseAuthRepository implements AuthRepository {
     }
 
     @Override
-    public void register(String email, String password) {
-        AuthState authState = new AuthState();
+    public void register(String email, String password, Consumer<AuthState> consumer) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> listener.onReceived(new AuthState(true)))
-                .addOnFailureListener(e -> listener.onReceived(new AuthState(e.getMessage())));
+                .addOnSuccessListener(authResult -> consumer.accept(new AuthState(true)))
+                .addOnFailureListener(e -> consumer.accept(new AuthState(e.getMessage())));
     }
 
-    @Override
-    public void addAuthenticationSuccessListener(AuthenticationSuccessListener listener) {
-        this.listener = listener;
-    }
 }

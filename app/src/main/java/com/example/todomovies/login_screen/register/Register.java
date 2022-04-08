@@ -41,6 +41,16 @@ public class Register extends BaseActivity<RegisterViewModel> {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        viewModel.registerSuccess.observe(this, authState -> {
+            if (authState.isSuccessful()) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            } else
+                Toast.makeText(Register.this, authState.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        });
+
         binding.RegisterButton.setOnClickListener(v -> {
             String Name = binding.RegisterName.getText().toString();
             String Email = binding.RegisterEmail.getText().toString();
@@ -68,17 +78,8 @@ public class Register extends BaseActivity<RegisterViewModel> {
                 return;
             }
 
-            //data is validated
-//            Toast.makeText(Register.this, "Data Validated", Toast.LENGTH_SHORT).show();
             //register the user
             viewModel.register(Email, Password);
-            viewModel.registerSuccess.observe(this, authState -> {
-                if (authState.isSuccessful()) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                } else
-                    Toast.makeText(Register.this, authState.getErrorMessage(), Toast.LENGTH_SHORT).show();
-            });
         });
 
         binding.ScndLoginBtn.setOnClickListener(v -> {
