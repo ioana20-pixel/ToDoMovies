@@ -7,7 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todomovies.R;
-import com.example.todomovies.login_screen.Login;
+import com.example.todomovies.login_screen.login.LoginActivity;
 import com.example.todomovies.utils.Constants;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         boolean h = new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         }, 2000);

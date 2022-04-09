@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.todomovies.MainActivity;
 import com.example.todomovies.databinding.ActivityRegisterBinding;
-import com.example.todomovies.login_screen.Login;
+import com.example.todomovies.login_screen.login.LoginActivity;
 import com.example.todomovies.ui.base.BaseActivity;
 import com.example.todomovies.utils.InjectorUtils;
 
@@ -74,7 +74,7 @@ public class RegisterActivity extends BaseActivity<RegisterViewModel> {
         });
 
         binding.ScndLoginBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), Login.class));
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
         });
     }

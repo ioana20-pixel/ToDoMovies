@@ -16,7 +16,7 @@
             android:name="com.example.todomovies.login_screen.register.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.todomovies.login_screen.Login"
+            android:name="com.example.todomovies.login_screen.login.LoginActivity"
             android:exported="true" />
         <activity android:name=".ui.details.DetailsActivity"
             android:parentActivityName=".MainActivity"/>

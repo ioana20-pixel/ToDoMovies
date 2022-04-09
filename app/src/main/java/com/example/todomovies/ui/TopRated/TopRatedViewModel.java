@@ -32,23 +32,6 @@ public class TopRatedViewModel extends BaseViewModel {
     }
 
     private void getTopRated() {
-        Call<MoviesList> call = tvRepository.getTvByCategory(Constants.CATEGORY_TOP_RATED);
-        call.enqueue(new Callback<MoviesList>() {
-            @Override
-            public void onResponse(@NotNull Call<MoviesList> call, @NotNull Response<MoviesList> response) {
-                if (response.code() == 200) {
-                    MoviesList movies = response.body();
-                    if (movies != null) {
-                        _topRatedTvs.postValue(new ArrayList<>(movies.getResults()));
-                    }
-                } else
-                    Log.e("TopRatedViewModel", response.message());
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<MoviesList> call, @NotNull Throwable t) {
-                Log.e("TopRatedViewModel", t.getMessage());
-            }
-        });
+        tvRepository.getByCategory(Constants.CATEGORY_TOP_RATED, _topRatedTvs::postValue);
     }
 }

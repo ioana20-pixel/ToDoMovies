@@ -1,25 +1,11 @@
 package com.example.todomovies.data.repository;
 
-import com.example.todomovies.data.api.MovieApi;
-import com.example.todomovies.data.model.MoviesList;
+import com.example.todomovies.data.model.Result;
 
-import retrofit2.Call;
+import java.util.List;
+import java.util.function.Consumer;
 
-public class TvRepository {
-    private static TvRepository instance = null;
-    private final MovieApi api;
+public interface TvRepository {
+    void getByCategory(String category, Consumer<List<Result>> consumer);
 
-    private TvRepository(MovieApi api) {
-        this.api = api;
-    }
-
-    public static TvRepository getInstance(MovieApi api) {
-        if (instance == null)
-            instance = new TvRepository(api);
-        return instance;
-    }
-
-    public Call<MoviesList> getTvByCategory(String category) {
-        return api.listOfMovies(category);
-    }
 }

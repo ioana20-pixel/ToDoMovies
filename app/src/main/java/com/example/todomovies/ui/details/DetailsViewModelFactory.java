@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.todomovies.data.repository.ToWatchRepository;
-import com.example.todomovies.data.repository.TvDetailsRepository;
 
 import org.jetbrains.annotations.NotNull;
 
