@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoMovies">
         <activity
-            android:name="com.example.todomovies.login_screen.register.Register"
+            android:name="com.example.todomovies.login_screen.register.RegisterActivity"
             android:exported="true" />
         <activity
             android:name="com.example.todomovies.login_screen.Login"

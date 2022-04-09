@@ -1,30 +1,21 @@
 package com.example.todomovies.login_screen.register;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.todomovies.MainActivity;
-import com.example.todomovies.R;
 import com.example.todomovies.databinding.ActivityRegisterBinding;
 import com.example.todomovies.login_screen.Login;
 import com.example.todomovies.ui.base.BaseActivity;
 import com.example.todomovies.utils.InjectorUtils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Register extends BaseActivity<RegisterViewModel> {
+public class RegisterActivity extends BaseActivity<RegisterViewModel> {
     private ActivityRegisterBinding binding;
 
     @NonNull
@@ -48,7 +39,7 @@ public class Register extends BaseActivity<RegisterViewModel> {
                 startActivity(intent);
                 finish();
             } else
-                Toast.makeText(Register.this, authState.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, authState.getErrorMessage(), Toast.LENGTH_SHORT).show();
         });
 
         binding.RegisterButton.setOnClickListener(v -> {

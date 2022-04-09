@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.todomovies.MainActivity;
 import com.example.todomovies.R;
 import com.example.todomovies.data.repository.LoginRepository;
-import com.example.todomovies.login_screen.register.Register;
+import com.example.todomovies.login_screen.register.RegisterActivity;
 import com.example.todomovies.ui.base.BaseActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,7 +37,7 @@ public class Login extends BaseActivity<LoginViewModel> {
         ScndRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
 
