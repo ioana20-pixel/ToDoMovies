@@ -1,5 +1,9 @@
 package com.example.todomovies.data.repository;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.todomovies.data.api.MovieApi;
 import com.example.todomovies.data.model.MoviesList;
 import com.example.todomovies.data.model.Result;
@@ -31,6 +35,7 @@ public class TvRetrofitRepository implements TvRepository{
     public void getByCategory(String category, Consumer<List<Result>> consumer) {
         Call<MoviesList> call = api.listOfMovies(category);
         call.enqueue(new Callback<MoviesList>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(@NotNull Call<MoviesList> call, @NotNull Response<MoviesList> response) {
                 if (response.code() == 200) {

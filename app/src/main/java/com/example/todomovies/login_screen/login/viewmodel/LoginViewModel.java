@@ -1,6 +1,9 @@
 package com.example.todomovies.login_screen.login.viewmodel;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -24,6 +27,7 @@ public class LoginViewModel extends BaseViewModel {
         this.repository = repository;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void login(String email, String password) {
         repository.login(email, password, new Consumer<AuthState>() {
             @Override

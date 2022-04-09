@@ -1,6 +1,9 @@
 package com.example.todomovies.ui.details;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.todomovies.data.api.TvDetailsApi;
 import com.example.todomovies.data.model.TvDetailsResponse;
@@ -34,6 +37,7 @@ public class TvDetailsRetrofitRepository implements TvDetailsRepository{
     public void getTvDetails(int id, Consumer<TvDetailsResponse> consumer) {
         Call<TvDetailsResponse> responseCall = tvDetailsApi.getMovieDetails(id);
         responseCall.enqueue(new Callback<TvDetailsResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(@NotNull Call<TvDetailsResponse> call, @NotNull Response<TvDetailsResponse> response) {
                 if (response.code() == 200) {
