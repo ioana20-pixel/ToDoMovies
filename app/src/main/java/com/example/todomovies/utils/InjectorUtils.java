@@ -8,6 +8,7 @@ import com.example.todomovies.data.repository.auth.FirebaseAuthRepository;
 import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
 import com.example.todomovies.login_screen.register.RegisterViewModelFactory;
+import com.example.todomovies.ui.Popular.PopularViewModelFactory;
 import com.example.todomovies.ui.TopRated.TopRatedViewModelFactory;
 import com.example.todomovies.ui.details.DetailsViewModelFactory;
 import com.example.todomovies.ui.details.TvDetailsRepository;
@@ -37,5 +38,9 @@ public class InjectorUtils {
 
     public TopRatedViewModelFactory provideTopRatedViewModelFactory() {
         return new TopRatedViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()));
+    }
+
+    public PopularViewModelFactory providePopularViewModelFactory() {
+        return new PopularViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()));
     }
 }
