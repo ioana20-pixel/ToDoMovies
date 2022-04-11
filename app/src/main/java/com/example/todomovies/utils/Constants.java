@@ -1,13 +1,12 @@
 package com.example.todomovies.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.todomovies.data.api.ApiClient;
-import com.example.todomovies.data.model.Configuration;
-
-import org.jetbrains.annotations.NotNull;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.todomovies.data.repository.config.ConfigBackendRepository;
+import com.example.todomovies.data.repository.config.ConfigRetrofitRepository;
 
 public class Constants {
     public final static String BASE_URL = "https://api.themoviedb.org/3/";
@@ -16,15 +15,14 @@ public class Constants {
     public static String IMAGE_BASE_URL;
     public final static String CATEGORY_TOP_RATED = "top_rated";
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static void setImageBaseUrl() {
-        ApiClient.getConfigApi().getConfiguration().enqueue(new Callback<Configuration>() {
-            @Override
-            public void onResponse(@NotNull Call<Configuration> call, @NotNull Response<Configuration> response) {
-                IMAGE_BASE_URL = response.body().getImages().getSecureBaseUrl() + response.body().getImages().getPosterSizes().get(5);
-            }
+        ConfigBackendRepository.getInstance().getConfig(configuration -> {
+            if (configuration == null) {
+                ConfigRetrofitRepository.getInstance(ApiClient.getConfigApi()).getConfig(configuration1 ->
+                        IMAGE_BASE_URL = configuration1.getImages().getSecureBaseUrl() + configuration1.getImages().getPosterSizes().get(5));
+            } else
+                IMAGE_BASE_URL = configuration.getImages().getSecureBaseUrl() + configuration.getImages().getPosterSizes().get(5);
 
-            @Override
-            public void onFailure(Call<Configuration> call, Throwable t) {
-            }
         });
     }}

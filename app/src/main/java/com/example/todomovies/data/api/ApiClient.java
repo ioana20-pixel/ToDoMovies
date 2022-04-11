@@ -2,16 +2,11 @@ package com.example.todomovies.data.api;
 
 import com.example.todomovies.utils.Constants;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -53,7 +48,7 @@ public class ApiClient {
     private static final MovieApi movieApi=retrofit.create(MovieApi.class);
     public static MovieApi getMovieApi(){return movieApi;}
 
-    private static final Config configApi = retrofit.create(Config.class);
-    public static Config getConfigApi(){return configApi;}
+    private static final ConfigApi configApi = retrofit.create(ConfigApi.class);
+    public static ConfigApi getConfigApi(){return configApi;}
 
 }
