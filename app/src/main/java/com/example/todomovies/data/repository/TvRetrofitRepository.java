@@ -10,6 +10,7 @@ import com.example.todomovies.data.model.Result;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -46,8 +47,11 @@ public class TvRetrofitRepository implements TvRepository{
                 }
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onFailure(@NotNull Call<MoviesList> call, @NotNull Throwable t) {}
+            public void onFailure(@NotNull Call<MoviesList> call, @NotNull Throwable t) {
+                consumer.accept(new ArrayList<>());
+            }
         });
     }
 }

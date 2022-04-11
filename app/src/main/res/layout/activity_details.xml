@@ -187,11 +187,11 @@
             app:layout_constraintTop_toBottomOf="@+id/textOverview" />
 
         <Button
-            android:id="@+id/btnAddFavorite"
+            android:id="@+id/btnAddToWatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Add to favorites"
+            android:text="Add to to watch"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

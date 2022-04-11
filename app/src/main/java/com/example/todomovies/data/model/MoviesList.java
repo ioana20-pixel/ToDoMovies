@@ -1,9 +1,9 @@
 package com.example.todomovies.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
-import com.example.todomovies.data.model.Result;
-import com.google.gson.annotations.SerializedName;
 
 public class MoviesList implements Serializable {
     @SerializedName("page")

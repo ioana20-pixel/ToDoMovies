@@ -5,7 +5,10 @@ import android.content.Context;
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.repository.TvRetrofitRepository;
 import com.example.todomovies.data.repository.auth.FirebaseAuthRepository;
+import com.example.todomovies.data.repository.backend.BackendPopularRepository;
+import com.example.todomovies.data.repository.backend.BackendTopRatedRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
+import com.example.todomovies.data.repository.towatch.ToWatchRepository;
 import com.example.todomovies.data.repository.towatch.ToWatchRoomRepository;
 import com.example.todomovies.login_screen.register.RegisterViewModelFactory;
 import com.example.todomovies.ui.Popular.PopularViewModelFactory;
@@ -28,7 +31,7 @@ public class InjectorUtils {
 
     public DetailsViewModelFactory provideDetailsViewModelFactory(int id, Context context) {
         TvDetailsRetrofitRepository tvDetailsRetrofitRepository = TvDetailsRetrofitRepository.getInstance(ApiClient.getTvDetailsApi());
-        ToWatchRoomRepository toWatchRoomRepository= ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
+        ToWatchRepository toWatchRoomRepository= ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
         return new DetailsViewModelFactory(tvDetailsRetrofitRepository, toWatchRoomRepository, id);
     }
 
@@ -37,11 +40,11 @@ public class InjectorUtils {
     }
 
     public TopRatedViewModelFactory provideTopRatedViewModelFactory() {
-        return new TopRatedViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()));
+        return new TopRatedViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()), new BackendTopRatedRepository());
     }
 
     public PopularViewModelFactory providePopularViewModelFactory() {
-        return new PopularViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()));
+        return new PopularViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()), new BackendPopularRepository());
     }
 
     public ToWatchViewModelFactory provideToWatchViewModelFactory(Context context) {

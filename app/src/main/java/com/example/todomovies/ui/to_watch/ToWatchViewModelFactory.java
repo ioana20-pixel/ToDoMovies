@@ -1,6 +1,9 @@
 package com.example.todomovies.ui.to_watch;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,8 +16,10 @@ public class ToWatchViewModelFactory implements ViewModelProvider.Factory {
         this.toWatchRepository = toWatchRepository;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
     @Override
+    @SuppressWarnings("unchecked")
     public<T extends ViewModel> T create(@NonNull Class<T> modelClass){
         if (modelClass.isAssignableFrom(ToWatchViewModel.class))
             return (T) new ToWatchViewModel(toWatchRepository);

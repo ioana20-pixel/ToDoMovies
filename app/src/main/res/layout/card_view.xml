@@ -69,6 +69,13 @@
                         android:layout_marginTop="10dp"
                         android:text="Rate"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <ImageButton
+                        android:id="@+id/btnAddToWatch"
+                        android:layout_width="66dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_baseline_delete_24" />
+
                 </LinearLayout>
 
                 <LinearLayout

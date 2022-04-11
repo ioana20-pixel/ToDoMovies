@@ -1,6 +1,5 @@
 package com.example.todomovies;
-import com.example.todomovies.data.api.ApiClient;
-import com.example.todomovies.data.model.Configuration;
+
 import com.example.todomovies.data.model.Result;
 import android.content.Context;
 import android.util.Log;
@@ -11,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,10 +18,6 @@ import com.example.todomovies.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GenAdapter extends RecyclerView.Adapter<GenAdapter.ViewHolder> {
     private final List<Result> movieResult;
@@ -58,12 +51,7 @@ public class GenAdapter extends RecyclerView.Adapter<GenAdapter.ViewHolder> {
         Result item = movieResult.get(position);
         holder.Bind(item);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClicked(item.getId());
-            }
-        });
+        holder.view.setOnClickListener(v -> listener.onItemClicked(item.getId()));
     }
 
     @Override

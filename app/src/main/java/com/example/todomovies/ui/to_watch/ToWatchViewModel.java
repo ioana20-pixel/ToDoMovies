@@ -27,11 +27,10 @@ public class ToWatchViewModel extends BaseViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getToWatch(){
-        toWatchRepository.getAll(new Consumer<List<TvDetailsResponse>>() {
-            @Override
-            public void accept(List<TvDetailsResponse> tvDetailsResponses) {
-                _toWatchTvs.postValue(tvDetailsResponses);
-            }
-        });
+        toWatchRepository.getAll(tvDetailsResponses -> _toWatchTvs.postValue(tvDetailsResponses));
+    }
+
+    public void delete(TvDetailsResponse tvDetailsResponse) {
+        toWatchRepository.delete(tvDetailsResponse);
     }
 }

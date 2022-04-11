@@ -1,14 +1,11 @@
 package com.example.todomovies.ui.details;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.example.todomovies.data.model.TvDetailsResponse;
-import com.example.todomovies.data.api.TvDetailsApi;
-import com.example.todomovies.data.repository.towatch.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
 import com.example.todomovies.data.repository.towatch.ToWatchRoomRepository;
 import com.example.todomovies.databinding.ActivityDetailsBinding;
@@ -27,7 +24,6 @@ startActivity(intent);
 
 public class DetailsActivity extends BaseActivity<DetailsViewModel> {
     private ActivityDetailsBinding binding;
-    private FindTvListener listener;
 
     @NotNull
     @Override
@@ -43,6 +39,7 @@ public class DetailsActivity extends BaseActivity<DetailsViewModel> {
         binding = ActivityDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        viewModel.toWatchTv.observe(this, tvDetailsResponse -> binding.btnAddToWatch.setEnabled(tvDetailsResponse == null));
         viewModel.tvDetails.observe(this, this::bindUI);
     }
 
@@ -62,21 +59,15 @@ public class DetailsActivity extends BaseActivity<DetailsViewModel> {
         binding.tvStatus.setText(tv.getStatus());
         binding.tvTagline.setText(tv.getTagline());
 
-        listener = found -> DetailsActivity.this.runOnUiThread(() -> {
-            binding.btnAddFavorite.setEnabled(false);
-        });
-        viewModel.checkIfAlreadyAdded(tv.getId(), listener);
 
-        binding.btnAddFavorite.setOnClickListener(view -> {
+        viewModel.checkIfAlreadyAdded(tv.getId());
+
+        binding.btnAddToWatch.setOnClickListener(view -> {
             viewModel.addToWatch(tv);
-            binding.btnAddFavorite.setEnabled(false);
+            binding.btnAddToWatch.setEnabled(false);
 
         });
 
-    }
-
-    public interface FindTvListener {
-        void onReceived(boolean found);
     }
 
 }

@@ -28,6 +28,7 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
 
     public interface ItemClickListener{
         void onItemClicked(int id);
+        void onItemDelete(TvDetailsResponse tv);
     }
 
     public ToWatchAdapter(Context context, List<TvDetailsResponse> movieResult, ItemClickListener listener) {
@@ -44,7 +45,6 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
         view = layoutInflater.inflate(R.layout.card_view_towatch, parent, false);
 
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -52,25 +52,12 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
         TvDetailsResponse item = movieResult.get(position);
         holder.Bind(item);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClicked(item.getId());
-            }
-        });
-        holder.delBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteItem(item);
-            }
-        });
+        holder.view.setOnClickListener(v -> listener.onItemClicked(item.getId()));
+        holder.delBtn.setOnClickListener(v -> deleteItem(item));
     }
 
     private void deleteItem(TvDetailsResponse item) {
-        ToWatchRoomRepository repo = ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
-
-        new Thread(() -> repo.delete(item)).start();
-
+        listener.onItemDelete(item);
         movieResult.remove(item);
         notifyDataSetChanged();
     }
@@ -87,7 +74,6 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
         TextView movieTitle, movieRate, releaseDate;
         ImageView movieImg;
         ImageButton delBtn;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
