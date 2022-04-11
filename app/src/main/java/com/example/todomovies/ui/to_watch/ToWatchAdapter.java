@@ -1,11 +1,9 @@
 package com.example.todomovies.ui.to_watch;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.todomovies.R;
 import com.example.todomovies.data.model.TvDetailsResponse;
-import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
+import com.example.todomovies.data.repository.towatch.ToWatchRoomRepository;
 import com.example.todomovies.utils.Constants;
 
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
     private final List<TvDetailsResponse> movieResult;
     private final ItemClickListener listener;
     private Context context;
+
     public interface ItemClickListener{
         void onItemClicked(int id);
     }
@@ -68,7 +67,7 @@ public class ToWatchAdapter extends RecyclerView.Adapter<ToWatchAdapter.ViewHold
     }
 
     private void deleteItem(TvDetailsResponse item) {
-        ToWatchRepository repo = ToWatchRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
+        ToWatchRoomRepository repo = ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
 
         new Thread(() -> repo.delete(item)).start();
 

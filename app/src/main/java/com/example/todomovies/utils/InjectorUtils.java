@@ -5,14 +5,14 @@ import android.content.Context;
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.repository.TvRetrofitRepository;
 import com.example.todomovies.data.repository.auth.FirebaseAuthRepository;
-import com.example.todomovies.data.repository.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
+import com.example.todomovies.data.repository.towatch.ToWatchRoomRepository;
 import com.example.todomovies.login_screen.register.RegisterViewModelFactory;
 import com.example.todomovies.ui.Popular.PopularViewModelFactory;
 import com.example.todomovies.ui.TopRated.TopRatedViewModelFactory;
 import com.example.todomovies.ui.details.DetailsViewModelFactory;
-import com.example.todomovies.ui.details.TvDetailsRepository;
 import com.example.todomovies.ui.details.TvDetailsRetrofitRepository;
+import com.example.todomovies.ui.to_watch.ToWatchViewModelFactory;
 
 public class InjectorUtils {
     private static InjectorUtils instance = null;
@@ -28,8 +28,8 @@ public class InjectorUtils {
 
     public DetailsViewModelFactory provideDetailsViewModelFactory(int id, Context context) {
         TvDetailsRetrofitRepository tvDetailsRetrofitRepository = TvDetailsRetrofitRepository.getInstance(ApiClient.getTvDetailsApi());
-        ToWatchRepository toWatchRepository= ToWatchRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
-        return new DetailsViewModelFactory(tvDetailsRetrofitRepository, toWatchRepository, id);
+        ToWatchRoomRepository toWatchRoomRepository= ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
+        return new DetailsViewModelFactory(tvDetailsRetrofitRepository, toWatchRoomRepository, id);
     }
 
     public RegisterViewModelFactory provideRegisterViewModelFactory() {
@@ -42,5 +42,9 @@ public class InjectorUtils {
 
     public PopularViewModelFactory providePopularViewModelFactory() {
         return new PopularViewModelFactory(TvRetrofitRepository.getInstance(ApiClient.getMovieApi()));
+    }
+
+    public ToWatchViewModelFactory provideToWatchViewModelFactory(Context context) {
+        return new ToWatchViewModelFactory(ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao()));
     }
 }

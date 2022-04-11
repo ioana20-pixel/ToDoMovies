@@ -8,8 +8,9 @@ import android.os.Bundle;
 import com.bumptech.glide.Glide;
 import com.example.todomovies.data.model.TvDetailsResponse;
 import com.example.todomovies.data.api.TvDetailsApi;
-import com.example.todomovies.data.repository.ToWatchRepository;
+import com.example.todomovies.data.repository.towatch.ToWatchRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
+import com.example.todomovies.data.repository.towatch.ToWatchRoomRepository;
 import com.example.todomovies.databinding.ActivityDetailsBinding;
 import com.example.todomovies.ui.base.BaseActivity;
 import com.example.todomovies.utils.Constants;
@@ -46,7 +47,7 @@ public class DetailsActivity extends BaseActivity<DetailsViewModel> {
     }
 
     private void bindUI(TvDetailsResponse tv) {
-        ToWatchRepository repo = ToWatchRepository.getInstance(ToWatchDatabase.getInstance(getApplicationContext()).toWatchDao());
+        ToWatchRoomRepository repo = ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(getApplicationContext()).toWatchDao());
         Glide.with(getApplicationContext())
                 .load(Constants.IMAGE_BASE_URL + tv.getBackdropPath())
                 .into(binding.ivBackdrop);

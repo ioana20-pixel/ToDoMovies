@@ -1,4 +1,4 @@
-package com.example.todomovies.data.repository;
+package com.example.todomovies.data.repository.towatch;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

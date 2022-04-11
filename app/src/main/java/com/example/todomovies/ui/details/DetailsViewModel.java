@@ -4,21 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.todomovies.data.model.TvDetailsResponse;
-import com.example.todomovies.data.repository.ToWatchRepository;
+import com.example.todomovies.data.repository.towatch.ToWatchRoomRepository;
 import com.example.todomovies.ui.base.BaseViewModel;
 
 public class DetailsViewModel extends BaseViewModel {
     private final TvDetailsRepository detailsRepository;
-    private final ToWatchRepository toWatchRepository;
+    private final ToWatchRoomRepository toWatchRoomRepository;
 
     private final MutableLiveData<TvDetailsResponse> _tvDetails = new MutableLiveData<>();
 
     public LiveData<TvDetailsResponse> tvDetails = _tvDetails;
 
-    public DetailsViewModel(TvDetailsRepository detailsRepository, ToWatchRepository toWatchRepository, int id) {
+    public DetailsViewModel(TvDetailsRepository detailsRepository, ToWatchRoomRepository toWatchRoomRepository, int id) {
 
         this.detailsRepository = detailsRepository;
-        this.toWatchRepository = toWatchRepository;
+        this.toWatchRoomRepository = toWatchRoomRepository;
         setTv(id);
     }
 
@@ -28,12 +28,12 @@ public class DetailsViewModel extends BaseViewModel {
 
     public void checkIfAlreadyAdded(int id, DetailsActivity.FindTvListener listener) {
         new Thread(() -> {
-            if (toWatchRepository.findById(id) != null)
+            if (toWatchRoomRepository.findById(id) != null)
                 listener.onReceived(true);
         }).start();
     }
 
     public void addToWatch(TvDetailsResponse tv) {
-        new Thread(() -> toWatchRepository.insert(tv)).start();
+        new Thread(() -> toWatchRoomRepository.insert(tv)).start();
     }
 }

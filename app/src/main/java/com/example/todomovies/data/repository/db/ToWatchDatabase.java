@@ -6,9 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.todomovies.data.model.Result;
 import com.example.todomovies.data.model.TvDetailsResponse;
-import com.example.todomovies.data.repository.ToWatchDao;
+import com.example.todomovies.data.repository.towatch.ToWatchDao;
 
 @Database(entities = {TvDetailsResponse.class}, version = 1)
 public abstract class ToWatchDatabase extends RoomDatabase {
