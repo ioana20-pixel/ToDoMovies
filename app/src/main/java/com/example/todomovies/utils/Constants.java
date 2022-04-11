@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.repository.config.ConfigBackendRepository;
-import com.example.todomovies.data.repository.config.ConfigRetrofitRepository;
+import com.example.todomovies.data.repository.config.TheMovieDbConfigRepository;
 
 public class Constants {
     public final static String BASE_URL = "https://api.themoviedb.org/3/";
@@ -19,7 +19,7 @@ public class Constants {
     public static void setImageBaseUrl() {
         ConfigBackendRepository.getInstance().getConfig(configuration -> {
             if (configuration == null) {
-                ConfigRetrofitRepository.getInstance(ApiClient.getConfigApi()).getConfig(configuration1 ->
+                TheMovieDbConfigRepository.getInstance(ApiClient.getConfigApi()).getConfig(configuration1 ->
                         IMAGE_BASE_URL = configuration1.getImages().getSecureBaseUrl() + configuration1.getImages().getPosterSizes().get(5));
             } else
                 IMAGE_BASE_URL = configuration.getImages().getSecureBaseUrl() + configuration.getImages().getPosterSizes().get(5);

@@ -15,17 +15,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ConfigRetrofitRepository implements ConfigRepository{
-    private static ConfigRetrofitRepository instance = null;
+public class TheMovieDbConfigRepository implements ConfigRepository{
+    private static TheMovieDbConfigRepository instance = null;
     private final ConfigApi configApi;
 
-    private ConfigRetrofitRepository(ConfigApi configApi) {
+    private TheMovieDbConfigRepository(ConfigApi configApi) {
         this.configApi = configApi;
     }
 
-    public static ConfigRetrofitRepository getInstance(ConfigApi configApi) {
-        if (instance == null)
-            instance = new ConfigRetrofitRepository(configApi);
+    public static TheMovieDbConfigRepository getInstance(ConfigApi configApi) {
+        synchronized (TheMovieDbConfigRepository.class) {
+            if (instance == null)
+                instance = new TheMovieDbConfigRepository(configApi);
+        }
         return instance;
     }
 

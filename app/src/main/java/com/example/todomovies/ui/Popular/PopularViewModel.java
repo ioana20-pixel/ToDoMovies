@@ -16,20 +16,21 @@ import java.util.function.Consumer;
 
 public class PopularViewModel extends BaseViewModel {
     private final TvRepository tvRepository;
+    private final TvRepository backendPopularRepository;
 
     private final MutableLiveData<List<Result>> _popularTvs = new MutableLiveData<>();
     public LiveData<List<Result>> popularTvs = _popularTvs;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public PopularViewModel(TvRepository tvRepository, TvRepository backendPopularRepository) {
-        super();
         this.tvRepository = tvRepository;
+        this.backendPopularRepository= backendPopularRepository;
         getPopular();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getPopular() {
-        tvRepository.getByCategory(Constants.CATEGORY_POPULAR, new Consumer<List<Result>>() {
+        backendPopularRepository.getByCategory(Constants.CATEGORY_POPULAR, new Consumer<List<Result>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void accept(List<Result> results) {

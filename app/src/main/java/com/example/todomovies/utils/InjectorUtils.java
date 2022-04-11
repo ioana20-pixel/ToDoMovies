@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.repository.TvRetrofitRepository;
 import com.example.todomovies.data.repository.auth.FirebaseAuthRepository;
+import com.example.todomovies.data.repository.backend.BackendDetailsRepository;
 import com.example.todomovies.data.repository.backend.BackendPopularRepository;
 import com.example.todomovies.data.repository.backend.BackendTopRatedRepository;
 import com.example.todomovies.data.repository.db.ToWatchDatabase;
@@ -32,7 +33,7 @@ public class InjectorUtils {
     public DetailsViewModelFactory provideDetailsViewModelFactory(int id, Context context) {
         TvDetailsRetrofitRepository tvDetailsRetrofitRepository = TvDetailsRetrofitRepository.getInstance(ApiClient.getTvDetailsApi());
         ToWatchRepository toWatchRoomRepository= ToWatchRoomRepository.getInstance(ToWatchDatabase.getInstance(context).toWatchDao());
-        return new DetailsViewModelFactory(tvDetailsRetrofitRepository, toWatchRoomRepository, id);
+        return new DetailsViewModelFactory(tvDetailsRetrofitRepository, toWatchRoomRepository, id, new BackendDetailsRepository()); //needs fixes
     }
 
     public RegisterViewModelFactory provideRegisterViewModelFactory() {
