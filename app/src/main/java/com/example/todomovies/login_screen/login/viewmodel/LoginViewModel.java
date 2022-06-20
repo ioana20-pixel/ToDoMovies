@@ -14,7 +14,7 @@ import com.example.todomovies.ui.base.BaseViewModel;
 import java.util.function.Consumer;
 
 public class LoginViewModel extends BaseViewModel {
-    private final RemoteLoginRepository repository;
+    private final RemoteLoginRepository remoteLoginRepository;
 
     private final MutableLiveData<Boolean> _successLogin = new MutableLiveData<>();
     public final LiveData<Boolean> successLogin = _successLogin;
@@ -23,13 +23,13 @@ public class LoginViewModel extends BaseViewModel {
     public final LiveData<String> errorLogin = _errorLogin;
 
 
-    public LoginViewModel(@NonNull RemoteLoginRepository repository) {
-        this.repository = repository;
+    public LoginViewModel(@NonNull RemoteLoginRepository remoteLoginRepository) {
+        this.remoteLoginRepository = remoteLoginRepository;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void login(String email, String password) {
-        repository.login(email, password, new Consumer<AuthState>() {
+        remoteLoginRepository.login(email, password, new Consumer<AuthState>() {
             @Override
             public void accept(AuthState authState) {
                 if (authState.isSuccessful()) {
@@ -42,7 +42,7 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void checkIfUserIsLogged() {
-        if (repository.isLogged()) {
+        if (remoteLoginRepository.isLogged()) {
             _successLogin.postValue(true);
         }
     }

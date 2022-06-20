@@ -6,6 +6,6 @@ import com.example.todomovies.data.model.AuthState;
 
 import java.util.function.Consumer;
 
-public interface AuthRepository {
+public interface RemoteRegisterRepository {
     void register(String email, String password, Consumer<AuthState> consumer);
 }

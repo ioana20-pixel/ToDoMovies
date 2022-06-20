@@ -1,9 +1,11 @@
 package com.example.todomovies.ui.splash;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todomovies.R;
@@ -11,6 +13,7 @@ import com.example.todomovies.login_screen.login.LoginActivity;
 import com.example.todomovies.utils.Constants;
 
 public class SplashScreenActivity extends AppCompatActivity {
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -40,13 +40,13 @@ public class ToWatchRoomRepository implements ToWatchRepository{
     @Override
     public void getAll(Consumer<List<TvDetailsResponse>> consumer) {
         new Thread(() -> {
-            List<TvDetailsResponse> tvs = toWatchDao.getAllToWatch();
+            List<TvDetailsResponse> tvs = ToWatchDao.getAllToWatch();
             consumer.accept(tvs);
         }).start();    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void findById(int id, Consumer<TvDetailsResponse> consumer) {
-        new Thread(() -> consumer.accept(toWatchDao.findById(id))).start();
+        new Thread(() -> consumer.accept(ToWatchDao.findById(id))).start();
     }
 }

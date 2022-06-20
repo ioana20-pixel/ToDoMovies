@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.example.todomovies.data.api.ApiClient;
 import com.example.todomovies.data.repository.TvRetrofitRepository;
-import com.example.todomovies.data.repository.auth.FirebaseAuthRepository;
+import com.example.todomovies.data.repository.auth.FirebaseRegisterRepository;
 import com.example.todomovies.data.repository.backend.BackendDetailsRepository;
 import com.example.todomovies.data.repository.backend.BackendPopularRepository;
 import com.example.todomovies.data.repository.backend.BackendTopRatedRepository;
@@ -37,7 +37,7 @@ public class InjectorUtils {
     }
 
     public RegisterViewModelFactory provideRegisterViewModelFactory() {
-        return new RegisterViewModelFactory(FirebaseAuthRepository.getInstance());
+        return new RegisterViewModelFactory(FirebaseRegisterRepository.getInstance());
     }
 
     public TopRatedViewModelFactory provideTopRatedViewModelFactory() {
